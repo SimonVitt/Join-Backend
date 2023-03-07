@@ -9,17 +9,21 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from .serializers import CreateUserauthSerializer, LoginSerializer
 from knox import views as knox_views
-
-from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
 class CreateUserApi(CreateAPIView):
+    http_method_names = ['post']
+
     serializer_class = CreateUserauthSerializer
     permission_classes = [AllowAny,]
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginAPIView(knox_views.LoginView):
+    http_method_names = ['post']
+
     serializer_class = LoginSerializer
     permission_classes = [AllowAny,]
     
