@@ -20,7 +20,6 @@ class CreateUserApi(CreateAPIView):
     serializer_class = CreateUserauthSerializer
     permission_classes = [AllowAny,]
 
-@method_decorator(csrf_exempt, name='dispatch')
 class LoginAPIView(knox_views.LoginView):
     http_method_names = ['post']
 

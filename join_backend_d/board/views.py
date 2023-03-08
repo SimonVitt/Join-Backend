@@ -9,7 +9,6 @@ from django.core import serializers
 from django.http import HttpResponse
 from datetime import datetime
 
-
 # Create your views here.
 class BoardViewSet(viewsets.ModelViewSet):
     """
@@ -18,6 +17,18 @@ class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
     #permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        user_id = self.kwargs.get('id', None)
+        user = User.objects.filter(id=user_id)
+        try:
+            user = user[0]
+            queryset = Board.objects.filter(board_users__id=user.id)
+            return queryset
+        except IndexError as e:
+            return []
+    
+
     
     def get_group(self, board_users_list):
         numberOfGroups = Group.objects.filter(name__contains='boardgroup').count()

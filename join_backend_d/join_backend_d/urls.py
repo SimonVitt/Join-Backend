@@ -19,7 +19,7 @@ from rest_framework import routers
 from board.views import BoardViewSet, UserViewSet, TaskViewSet
 
 router = routers.DefaultRouter()
-router.register(r'boards', BoardViewSet)
+router.register(r'boards/(?P<id>[\w-]+)', BoardViewSet)
 router.register(r'alluser', UserViewSet, basename='AllUsers')
 router.register(r'(?P<boardname>[\w-]+)/tasks', TaskViewSet, basename='allTasksBoard')
 router.register(r'(?P<boardname>[\w-]+)/users', UserViewSet, basename='allUsersBoard')
